@@ -1,5 +1,15 @@
+import crypto from 'crypto';
+// import { v4 as uuidv4 } from "uuid";
+
 export default class TicketService {
-    openTicket () {
+    openTicket (requesterId: string, content: string) {
+        const ticketId = crypto.randomUUID()
+        const ticket = {
+            ticketId,
+            requesterId, 
+            content,
+            status: "open"
+        }
 
     }
 
