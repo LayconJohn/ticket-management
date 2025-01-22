@@ -5,7 +5,7 @@ create john_user {
 
 }
 
-create john.table {
+create john.ticket {
     ticket_id uuid primary key,
     requester_id uuid references john.user (user_id),
     assignee_id uuid references john.user (user_id),
