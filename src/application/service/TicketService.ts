@@ -22,7 +22,12 @@ export default class TicketService {
 
     }
 
-    assignTicket() {}
+    async assignTicket(ticketId: string, assigneeId: string) {
+        const ticket = await this.ticketDAO.get(ticketId);
+        ticket.assigneeId = assigneeId;
+        ticket.status = "assigned"
+        await this.ticketDAO.update(ticket);
+    }
 
     closeTicket() {}
 
