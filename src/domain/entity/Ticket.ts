@@ -2,6 +2,8 @@ import crypto from "crypto";
 
 export default class Ticket {
     assignedId?: string;
+    endDate?: Date;
+    duration?: number;
 
     constructor(
         readonly ticketId: string,
@@ -21,6 +23,13 @@ export default class Ticket {
     assign(assignedId: string) {
         this.status = "assigned";
         this.assignedId = assignedId;
+    }
 
+    close() {
+        if(this.status === "open") throw new Error("Ticket is not Assigned");
+        if(this.status === "closed") throw new Error("Ticket is already closed");
+        this.status = "closed";
+        this.endDate = new Date()
+        this.duration = this.endDate.getTime() - this.startDate.getTime();
     }
 }

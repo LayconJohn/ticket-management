@@ -30,12 +30,14 @@ export default class TicketService {
     }
 
     async closeTicket(ticketId: string) {
+        //Table Model: const ticket = await pg.query("SELECT * FROM john.ticket WHERE ticket_id = $", [ticketId])
         const ticket = await this.ticketDAO.get(ticketId);
         if(ticket.status === "open") throw new Error("Ticket is not Assigned")
         if(ticket.status === "closed") throw new Error("Ticket is already closed")    
         ticket.status = "closed";
         ticket.endDate = new Date();
         ticket.duration = ticket.endDate.getTime() - ticket.startDate.getTime();
+        //Table model: await pg.query("UPDATE ticket WHERE ticket_id = $", [ticketId]")
         await this.ticketDAO.update(ticket);
     }
 
