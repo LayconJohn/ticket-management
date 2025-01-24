@@ -29,7 +29,15 @@ export default class TicketService {
         await this.ticketDAO.update(ticket);
     }
 
-    closeTicket() {}
+    async closeTicket(ticketId: string) {
+        const ticket = await this.ticketDAO.get(ticketId);
+        if(ticket.status === "open") throw new Error("Ticket is not Assigned")
+        if(ticket.status === "closed") throw new Error("Ticket is already closed")    
+        ticket.status = "closed";
+        ticket.endDate = new Date();
+        ticket.duration = ticket.endDate.getTime() - ticket.startDate.getTime();
+        await this.ticketDAO.update(ticket);
+    }
 
     exportTicket() {}
 
