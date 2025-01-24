@@ -1,14 +1,14 @@
-import OpenTicket from "./OpenTicket";
+import Queue from "../../infra/queue/Queue";
 
 export default class ImporTicket {
     
     constructor(
-        readonly openTicket: OpenTicket
+        readonly queue: Queue
     ) {}
 
     async execute(input: Input): Promise<void> {
         for(const ticketInput of input.tickets) {
-            await this.openTicket.execute(ticketInput);
+            this.queue.publish("openTicket", ticketInput)
         }
     }
 }
