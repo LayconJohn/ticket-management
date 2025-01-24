@@ -1,16 +1,14 @@
-import Ticket from "../../domain/entity/Ticket";
-import TicketRepository from "../repository/TicketRepository";
+import OpenTicket from "./OpenTicket";
 
 export default class ImporTicket {
     
     constructor(
-        readonly ticketRepository: TicketRepository
+        readonly openTicket: OpenTicket
     ) {}
 
     async execute(input: Input): Promise<void> {
         for(const ticketInput of input.tickets) {
-            const ticket = await Ticket.create(ticketInput.requesterId, ticketInput.content);
-            await this.ticketRepository.save(ticket);
+            await this.openTicket.execute(ticketInput);
         }
     }
 }
